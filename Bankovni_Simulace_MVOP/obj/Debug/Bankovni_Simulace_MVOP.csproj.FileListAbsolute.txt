@@ -13,7 +13,3 @@ Q:\Škola\Programování\Bankovni_simulace-Alex\Bankovni_Simulace_MVOP\obj\Debug
 Q:\Škola\Programování\Bankovni_simulace-Alex\Bankovni_Simulace_MVOP\obj\Debug\Bankovni_Simulace_MVOP.csproj.CoreCompileInputs.cache
 Q:\Škola\Programování\Bankovni_simulace-Alex\Bankovni_Simulace_MVOP\obj\Debug\Bankovni_Simulace_MVOP.exe
 Q:\Škola\Programování\Bankovni_simulace-Alex\Bankovni_Simulace_MVOP\obj\Debug\Bankovni_Simulace_MVOP.pdb
-Q:\Škola\Programování\Bankovni_simulace-Alex\Bankovni_Simulace_MVOP\obj\Debug\MojeUcty.g.cs
-Q:\Škola\Programování\Bankovni_simulace-Alex\Bankovni_Simulace_MVOP\obj\Debug\MojeUcty.baml
-Q:\Škola\Programování\Bankovni_simulace-Alex\Bankovni_Simulace_MVOP\obj\Debug\VytvoritUcet.g.cs
-Q:\Škola\Programování\Bankovni_simulace-Alex\Bankovni_Simulace_MVOP\obj\Debug\VytvoritUcet.baml

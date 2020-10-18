@@ -1,0 +1,36 @@
+﻿<Window x:Class="Bankovni_Simulace_MVOP.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Bankovni_Simulace_MVOP"
+        mc:Ignorable="d"
+        Title="Banka" Height="450" Width="800"
+        ResizeMode="NoResize">
+    <Grid>
+        <Button x:Name="zkouska" Height="75" Width="150" Content="Vytvořit" FontSize="25" FontWeight="Bold" Grid.Column="1" Grid.Row="1" Click="CreateDeposit_Click"/>
+        <Button x:Name="UkazUcty" Height="75" Width="150" Content="Moje účty" FontSize="22" FontWeight="Bold" Click="UkazUcty_Click" Margin="322,284,322,62"/>
+
+        <Label x:Name="ZadejteNazev" Content="Zadejte název účtu" HorizontalAlignment="Center" FontSize="30" Margin="226,10,226,350"/>
+        <TextBox Width="308" Height="33" x:Name="jmeno" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="244,71,0,0"/>
+
+        <Label x:Name="ZadejteZustatek" Content="Zadejte zůstatek" HorizontalAlignment="Left" FontSize="30" Margin="300,148,0,212"/>
+        <TextBox Width="308" Height="33" x:Name="zustatek" HorizontalAlignment="Left" PreviewTextInput="NumberValidation" VerticalAlignment="Top" Margin="244,215,0,0"/>
+
+        <Button x:Name="VytvorUcet" Height="75" Width="150" Content="Vytvořit účet" FontSize="22" FontWeight="Bold" Click="VytvorUcet_Click" Margin="216,284,428,62"/>
+        <ComboBox x:Name="MoznostiUctu" HorizontalAlignment="Left" Margin="44,71,0,0" VerticalAlignment="Top" Width="120">
+            <ComboBoxItem>Spořící</ComboBoxItem>
+            <ComboBoxItem>Studentský</ComboBoxItem>
+            <ComboBoxItem>Kreditní</ComboBoxItem>
+        </ComboBox>
+        <ListBox x:Name="VypsaneUcty" HorizontalAlignment="Left" Height="223" Margin="44,136,0,0" VerticalAlignment="Top" Width="172" SelectionChanged="VypsaneUcty_SelectionChanged"/>
+
+        <Button x:Name="JdiZpet" Height="75" Width="150" Content="Jdi zpět" FontSize="22" FontWeight="Bold" Click="JdiZpet_Click" Margin="44,29,600,317"/>
+
+        <Button x:Name="VratitSeZpet" Height="75" Width="150" Content="Zpět" FontSize="22" FontWeight="Bold" Click="JdiZpet_Click" Margin="430,284,214,62"/>
+
+        <Calendar x:Name="Kalendar" HorizontalAlignment="Left" SelectedDatesChanged="Kalendar_SelectedDatesChanged" Margin="300,136,0,0" VerticalAlignment="Top"/>
+
+        <Button x:Name="PlusMesic" Height="75" Width="150" Content="Další měsíc" FontSize="22" FontWeight="Bold" Click="PlusMesic_Click" Margin="216,29,428,317"/>
+    </Grid>
+</Window>

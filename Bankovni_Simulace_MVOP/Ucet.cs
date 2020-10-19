@@ -8,10 +8,10 @@ namespace Bankovni_Simulace_MVOP
 {
     public class Ucet
     {
-        public decimal Zustatek { get; set; }
+        public double Zustatek { get; set; }
         public string Nazev { get; set; }
         public DateTime DatumZalozeni { get; set; }
-        public Ucet(string nazev, decimal zustatek, DateTime datumZalozeni)
+        public Ucet(string nazev, double zustatek, DateTime datumZalozeni)
         {
             Zustatek = zustatek;
             Nazev = nazev;
@@ -21,7 +21,7 @@ namespace Bankovni_Simulace_MVOP
     public class Sporici : Ucet
     {
         public double Urok { get; set; }
-        public Sporici(string nazev, decimal zustatek, double urok, DateTime datumZalozeni) : base(nazev, zustatek,datumZalozeni)
+        public Sporici(string nazev, double zustatek, double urok, DateTime datumZalozeni) : base(nazev, zustatek,datumZalozeni)
         {
             Nazev = nazev;
             Zustatek = zustatek;
@@ -33,7 +33,7 @@ namespace Bankovni_Simulace_MVOP
     public class Studentsky : Sporici
     {
         public int MaxVyber { get; set; }
-        public Studentsky(string nazev, decimal zustatek, double urok, int maxVyber, DateTime datumZalozeni) : base(nazev, zustatek, urok, datumZalozeni)
+        public Studentsky(string nazev, double zustatek, double urok, int maxVyber, DateTime datumZalozeni) : base(nazev, zustatek, urok, datumZalozeni)
         {
             MaxVyber = maxVyber;
             Urok = urok;
@@ -49,8 +49,9 @@ namespace Bankovni_Simulace_MVOP
         //Možnost zaplatit peníze, abych se dostal z mínusu
 
         public double Urok { get; set; }
+        public double ChybiSplatit { get; set; }
        
-        public Kreditni(string nazev, decimal zustatek, double urok, DateTime datumZalozeni) : base(nazev, zustatek, datumZalozeni)
+        public Kreditni(string nazev, double zustatek, double urok, DateTime datumZalozeni) : base(nazev, zustatek, datumZalozeni)
         {
             Urok = urok;
             DatumZalozeni = datumZalozeni;

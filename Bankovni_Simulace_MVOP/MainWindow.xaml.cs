@@ -31,6 +31,8 @@ namespace Bankovni_Simulace_MVOP
             LoadMainWindow();
             ZrychlenyCas(CasProgramu);
         }
+
+        public bool placeno;
         List<Ucet> Ucty = new List<Ucet>();
 
         private void CreateDeposit_Click(object sender, RoutedEventArgs e)
@@ -103,13 +105,13 @@ namespace Bankovni_Simulace_MVOP
                         switch (MoznostiUctu.SelectionBoxItem.ToString())
                         {
                             case "Spořící":
-                                Ucty.Add(new Sporici(jmeno.Text, Convert.ToDecimal(zustatek.Text), 2, CasProgramu));
+                                Ucty.Add(new Sporici(jmeno.Text, Convert.ToDouble(zustatek.Text), 2, CasProgramu));
                                 break;
                             case "Studentský":
-                                Ucty.Add(new Studentsky(jmeno.Text, Convert.ToDecimal(zustatek.Text), 0.1, 3000, CasProgramu));
+                                Ucty.Add(new Studentsky(jmeno.Text, Convert.ToDouble(zustatek.Text), 0.1, 3000, CasProgramu));
                                 break;
                             case "Kreditní":
-                                Ucty.Add(new Kreditni(jmeno.Text, Convert.ToDecimal(zustatek.Text), 20, CasProgramu));
+                                Ucty.Add(new Kreditni(jmeno.Text, Convert.ToDouble(zustatek.Text), 20, CasProgramu));
                                 break;
                         }
                         foreach (Ucet Item in Ucty)
@@ -123,6 +125,60 @@ namespace Bankovni_Simulace_MVOP
             else MessageBox.Show("Vyberte typ účtu, který si chcete založit", "CHYBA", MessageBoxButton.OK, MessageBoxImage.Information);
         } //Vytvoření účtu
 
+
+        private void UbehlMesic(List<Ucet> ucty)
+        {
+            
+            try
+            {
+                foreach (Sporici Item in ucty)
+            {
+                TimeSpan rozdil = CasProgramu - Item.DatumZalozeni;
+                if (rozdil == TimeSpan.FromDays(31))
+                {
+                    Item.Zustatek *= Item.Urok / 100 + 1;
+                }
+            }
+            }
+            catch(Exception)
+            {
+            }
+
+            try
+            {
+                foreach (Studentsky Item in ucty)
+                {
+                    TimeSpan rozdil = CasProgramu - Item.DatumZalozeni;
+                    if (rozdil == TimeSpan.FromDays(31))
+                    {
+                        Item.Zustatek *= Item.Urok / 100 + 1;
+                    }
+                }
+            }
+            catch (Exception )
+            {
+                
+            }
+
+            try
+            {
+                foreach (Kreditni Item in ucty)
+                {
+                    TimeSpan rozdil = CasProgramu - Item.DatumZalozeni;
+
+                    if(rozdil == TimeSpan.FromDays(31) && placeno == true)
+                    {
+                        Item.ChybiSplatit *= Item.Urok / 100 + 1;
+                    }
+
+                }
+            }
+            catch (Exception )
+            {
+                
+            }
+            
+        }
         private void UkazUcty_Click(object sender, RoutedEventArgs e)
         {
             LoadUkazUcty();
@@ -172,7 +228,8 @@ namespace Bankovni_Simulace_MVOP
             {
                 casProgramu = casProgramu.AddDays(1);
                 CasProgramu = casProgramu;
-                Kalendar.DisplayDate = CasProgramu;
+                Kalendar.SelectedDate = CasProgramu;
+                UbehlMesic(Ucty);
                 //MessageBox.Show(casProgramu.ToString());}}
             }
         }

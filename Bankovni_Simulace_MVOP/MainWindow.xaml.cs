@@ -12,8 +12,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Timers;
 
-using System.Text.RegularExpressions; //REGEX
+using System.Text.RegularExpressions;
+using System.Windows.Threading; //REGEX
 
 namespace Bankovni_Simulace_MVOP
 {
@@ -22,10 +24,12 @@ namespace Bankovni_Simulace_MVOP
     /// </summary>
     public partial class MainWindow : Window
     {
+        public DateTime CasProgramu = DateTime.Now;
         public MainWindow()
         {
             InitializeComponent();
             LoadMainWindow();
+            ZrychlenyCas(CasProgramu);
         }
         List<Ucet> Ucty = new List<Ucet>();
 
@@ -99,13 +103,13 @@ namespace Bankovni_Simulace_MVOP
                         switch (MoznostiUctu.SelectionBoxItem.ToString())
                         {
                             case "Spořící":
-                                Ucty.Add(new Sporici(jmeno.Text, Convert.ToDecimal(zustatek.Text), 2));
+                                Ucty.Add(new Sporici(jmeno.Text, Convert.ToDecimal(zustatek.Text), 2, CasProgramu));
                                 break;
                             case "Studentský":
-                                Ucty.Add(new Studentsky(jmeno.Text, Convert.ToDecimal(zustatek.Text), 0.1, 3000));
+                                Ucty.Add(new Studentsky(jmeno.Text, Convert.ToDecimal(zustatek.Text), 0.1, 3000, CasProgramu));
                                 break;
                             case "Kreditní":
-                                Ucty.Add(new Kreditni(jmeno.Text, Convert.ToDecimal(zustatek.Text), 20, DateTime.Now));
+                                Ucty.Add(new Kreditni(jmeno.Text, Convert.ToDecimal(zustatek.Text), 20, CasProgramu));
                                 break;
                         }
                         foreach (Ucet Item in Ucty)
@@ -122,6 +126,7 @@ namespace Bankovni_Simulace_MVOP
         private void UkazUcty_Click(object sender, RoutedEventArgs e)
         {
             LoadUkazUcty();
+            
         } //Načtení okna, kde se zobrazují účty
 
         private void VypsaneUcty_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -153,7 +158,23 @@ namespace Bankovni_Simulace_MVOP
 
         private void PlusMesic_Click(object sender, RoutedEventArgs e)
         {
+           CasProgramu = CasProgramu.AddMonths(1);
+        }
+        public void ZrychlenyCas(DateTime casProgramu)
+        {
+            DispatcherTimer dispatcherTimer = new DispatcherTimer();
+            dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
+            dispatcherTimer.Interval = new TimeSpan(0,0,1);
+            dispatcherTimer.Start();
 
+
+            void dispatcherTimer_Tick(object sender, EventArgs e)
+            {
+                casProgramu = casProgramu.AddDays(1);
+                CasProgramu = casProgramu;
+                Kalendar.DisplayDate = CasProgramu;
+                //MessageBox.Show(casProgramu.ToString());}}
+            }
         }
     }
 }

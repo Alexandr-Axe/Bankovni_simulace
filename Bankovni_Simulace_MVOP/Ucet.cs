@@ -8,34 +8,36 @@ namespace Bankovni_Simulace_MVOP
 {
     public class Ucet
     {
-        public decimal Zustatek { get; set; }
+        public double Zustatek { get; set; }
+        public double Urok { get; set; }
         public string Nazev { get; set; }
-        public Ucet(string nazev, decimal zustatek)
+        public DateTime DatumZalozeni { get; set; }
+        public string TypUctu { get; set; }
+        public Ucet(string nazev, double zustatek, double urok, DateTime datumZalozeni)
         {
             Zustatek = zustatek;
+            Urok = urok;
             Nazev = nazev;
+            DatumZalozeni = datumZalozeni;
         }
     }
     public class Sporici : Ucet
     {
-        public double Urok { get; set; }
-        public Sporici(string nazev, decimal zustatek, double urok) : base(nazev, zustatek)
+        public Sporici(string nazev, double zustatek, double urok, DateTime datumZalozeni) : base(nazev, zustatek, urok, datumZalozeni)
         {
-            Nazev = nazev;
-            Zustatek = zustatek;
-            Urok = urok;
+            TypUctu = "Spořící";
         }
-        public override string ToString() => $"Název účtu : {Nazev}\nZůstatek na účtě : {Zustatek} Kč\nMěsíční úrok : {Urok}%";
+        public override string ToString() => $"Název účtu : {Nazev}\nTyp : {TypUctu}\nZůstatek na účtě : {Zustatek} Kč\nMěsíční úrok : {Urok}%\nDatum splátky : {DatumZalozeni.ToString("dd/MM/yyyy")}\nDatum úročení : {DatumZalozeni.AddMonths(1).ToString("dd/MM/yyyy")}";
     }
     public class Studentsky : Sporici
     {
         public int MaxVyber { get; set; }
-        public Studentsky(string nazev, decimal zustatek, double urok, int maxVyber) : base(nazev, zustatek, urok)
+        public Studentsky(string nazev, double zustatek, double urok, int maxVyber, DateTime datumZalozeni) : base(nazev, zustatek, urok, datumZalozeni)
         {
             MaxVyber = maxVyber;
-            Urok = urok;
+            TypUctu = "Spořící studentský";
         }
-        public override string ToString() => $"Název účtu : {Nazev}\nZůstatek na účtě : {Zustatek} Kč\nMěsíční úrok : {Urok}%\nMaximální výběr : {MaxVyber}Kč";
+        public override string ToString() => $"Název účtu : {Nazev}\nTyp : {TypUctu}\nZůstatek na účtě : {Zustatek} Kč\nMěsíční úrok : {Urok}%\nMaximální výběr : {MaxVyber}Kč\nDatum splátky : {DatumZalozeni.ToString("dd/MM/yyyy")}\nDatum úročení : {DatumZalozeni.AddMonths(1).ToString("dd/MM/yyyy")}";
     }
 
     public class Kreditni : Ucet
@@ -44,14 +46,13 @@ namespace Bankovni_Simulace_MVOP
         //Při koupi budu mít hodnotu < 0
         //Další měsíc mám základ < 0 (mínus, kde jsem skončil)
         //Možnost zaplatit peníze, abych se dostal z mínusu
-
-        public double Urok { get; set; }
-        public DateTime DatumZalozeni { get; set; }
-        public Kreditni(string nazev, decimal zustatek, double urok, DateTime dz) : base(nazev, zustatek)
+        
+        public double ChybiSplatit { get; set; }
+       
+        public Kreditni(string nazev, double zustatek, double urok, DateTime datumZalozeni) : base(nazev, zustatek, urok, datumZalozeni)
         {
-            Urok = urok;
-            DatumZalozeni = dz.Date.AddMonths(1);
+            TypUctu = "Kreditní";
         }
-        public override string ToString() => $"Název účtu : {Nazev}\nMaximální půjčka : {Zustatek} Kč\nMěsíční úrok : {Urok}%\nDatum splátky : {DatumZalozeni.ToString("dd/MM/yyyy")}";
+        public override string ToString() => $"Název účtu : {Nazev}\nTyp : {TypUctu}\nMaximální půjčka : {Zustatek} Kč\nMěsíční úrok : {Urok}%\nDatum splátky : {DatumZalozeni.ToString("dd/MM/yyyy")}\nDatum úročení : {DatumZalozeni.AddMonths(1).ToString("dd/MM/yyyy")}";
     }
 }
